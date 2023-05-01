@@ -1,33 +1,25 @@
-# netunicorn-connector-template
-This is a template repository for creating a new connector for the netunicorn platform.
+# netunicorn-connector-ssh
+This is an SSH connector for netunicorn platform.  
 
-## How to use this template
-Use the code from `src/netunicorn/contrib/connectors/connector_name.py` as a starting point for your connector. The code is commented and should be self-explanatory.
-In addition, you can read the NetunicornProtocol documentation and comments in netunicorn-base package.
+This connector allows you to specify a list of hosts and use them as a target for deployments.
+Access to the hosts is done via SSH and requires **passwordless** SSH certificate to be configured and preinstalled.
 
-## Folder structure
-This project establishes a certain folder structure.
+## How to use
+This connector is supposed to be installed as a part of netunicorn-director-infrastructure package or container.
 
-### `src` folder
-All the code is located in `src` folder. You can freely create other folders for documentation, tests, etc.  
-Note that if you create a Python package with setuptools, you'll need to 
-specify the `src` folder as the root of the package.  
-For example, for pyproject.toml you need to add the next lines:
-```toml
-[tool.setuptools.packages.find]
-where = ["src"]
+Install the package:
+```bash
+pip install netunicorn-connector-ssh
 ```
 
-The `pyproject.toml` template in this repository already contains these lines.
+Then, add the connector to the netunicorn-director-infrastructure configuration:
+```yaml
+  ssh-connector-1:  # unique name
+    enabled: true
+    module: "netunicorn.director.infrastructure.connectors.ssh_connector"  # where to import from
+    class: "SSHConnector"  # class name
+    config: "configuration-example.yaml"     # path to configuration file
+```
 
-### `netunicorn/contrib/connectors` folder
-netunicorn project uses namespace packages for separate distribution of parts
-of the project. Please, read about namespace packages in Python documentation:
-[https://packaging.python.org/en/latest/guides/packaging-namespace-packages/](https://packaging.python.org/en/latest/guides/packaging-namespace-packages/).
-
-Brief rules about our namespace packages:
-- It's better to place your modules in `netunicorn/contrib` folder. In the particular case of connectors - in 
-  `netunicorn/contrib/connectors` folder.
-- You should not create `__init__.py` files in `netunicorn` and `netunicorn/contrib` folders, but you can create them
-  in subfolders of `netunicorn/contrib` folder.
-- After installation of your package, your modules will be available as `netunicorn.contrib.connectors.<your_module_name>`.
+Then, modify the configuration file to provide needed parameters (see [example](configuration-example.yaml)), such as
+list of hosts, SSH certificate location, etc.
