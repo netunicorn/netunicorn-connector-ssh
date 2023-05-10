@@ -369,7 +369,7 @@ class SSHConnector(NetunicornConnectorProtocol):
 async def test():
     from uuid import uuid4
     import cloudpickle  # you'll need it for tests
-    from netunicorn import Pipeline
+    from netunicorn.base import Pipeline
 
     connector = SSHConnector(
         connector_name="ssh-test-connector",

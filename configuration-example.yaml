@@ -8,7 +8,8 @@ netunicorn.ssh.hosts:
     properties:
       os: "linux"  # OS type
       architecture: "amd64"  # CPU architecture
-      custom-tag: "custom-value"  # custom tag, for example, supported deployment environments information
+      netunicorn-environments: ['DockerImage', 'ShellExecution']
+      custom-tag: "custom-value"  # custom tags
 
   some-another-host:
     address: "8.8.8.8"
@@ -17,4 +18,5 @@ netunicorn.ssh.hosts:
     properties:
       os: "linux"
       architecture: "amd64"
+      netunicorn-environments: ['ShellExecution']  # DockerImage is not supported
       custom-tag-2: "custom-value-2"
